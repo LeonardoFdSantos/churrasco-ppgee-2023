@@ -1,6 +1,6 @@
 import Thermometer from 'react-thermometer-component';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const thermos = [
     {
@@ -24,14 +24,22 @@ const thermos = [
   ]
   
   export default function Page() {
+    const [data, setData] = useState;
+
     const getData = async () => {
       try {
-        const res = await fetch('https://sheet.best/api/sheets/b58fc9f2-2a3d-42b4-b079-9cafc4a27cf3')
+        const res = await fetch('https://sheet.best/api/sheets/b58fc9f2-2a3d-42b4-b079-9cafc4a27cf3');
+        const data = await res.json();
+        setData(data);
       } catch (error) {
         console.log(error)
       }
 
     }
+
+    useEffect(() => {
+      getData();
+    }, []);
 
     return (
       <div className="bg-white py-24 sm:py-32">
@@ -43,17 +51,17 @@ const thermos = [
             </p>
           </div>
           <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {thermos.map((grupo)=>(
+            {data?.map((item)=>(
                 <div className="group relative">
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                  <a href={grupo.href}>
+                  <a href={item.href}>
                     <span className="absolute inset-0" />
-                    {grupo.Name}
+                    {item.Grupo}
                   </a>
                 </h3>
                 <Thermometer
                     theme="light"
-                    value={(grupo.value/grupo.valueMax)*100}
+                    value={(item.quantidade_atual/item.valor_maximo)*100}
                     max="100"
                     steps="10"
                     format="%"
