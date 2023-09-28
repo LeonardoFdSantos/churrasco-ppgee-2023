@@ -1,10 +1,12 @@
 import Thermometer from 'react-thermometer-component';
 
+import { useEffect } from 'react';
+
 const thermos = [
     {
         id: 1,
         Name: "GEPOC",
-        value: 0,
+        value: 1,
         valueMax: 30, 
     },
     {
@@ -22,6 +24,15 @@ const thermos = [
   ]
   
   export default function Page() {
+    const getData = async () => {
+      try {
+        const res = await fetch('https://sheet.best/api/sheets/17300833-5994-46e1-a0b1-5002637bcd5c')
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
     return (
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
