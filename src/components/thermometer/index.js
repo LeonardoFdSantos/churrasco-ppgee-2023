@@ -16,7 +16,7 @@ const thermos = [
     {
         id: 3,
         Name: "CEESP",
-        value: 13,
+        value: 0,
         valueMax: 18, 
     },
   ]
