@@ -9,9 +9,20 @@ export default function Page() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setData(response.data);
-    });
+    const fetchData = async () => {
+      await axios.get(baseURL).then((response) => {
+        setData(response.data);
+      });
+    };
+    
+    fetchData();
+
+    const intervalId = setInterval(() => {
+      fetchData(); // Fetch data every 2 minutes
+    }, 600000);
+
+    return () => clearInterval(intervalId);
+
   }, []);
 
   if (!data) return null;
