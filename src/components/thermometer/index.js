@@ -6,7 +6,7 @@ const thermos = [
     {
         id: 1,
         Name: "GEPOC",
-        value: 1,
+        value: 0,
         valueMax: 30, 
     },
     {
@@ -26,7 +26,7 @@ const thermos = [
   export default function Page() {
     const getData = async () => {
       try {
-        const res = await fetch('https://sheet.best/api/sheets/17300833-5994-46e1-a0b1-5002637bcd5c')
+        const res = await fetch('https://sheet.best/api/sheets/b58fc9f2-2a3d-42b4-b079-9cafc4a27cf3')
       } catch (error) {
         console.log(error)
       }
