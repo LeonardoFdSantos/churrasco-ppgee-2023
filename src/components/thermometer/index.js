@@ -1,19 +1,20 @@
 import Thermometer from 'react-thermometer-component';
+import axios from 'axios';
 
 import { useEffect, useState } from 'react';
 
-export default function Page() {
-  const defaultValue = []
-  const [data, setData] = useState(defaultValue);
+const baseURL = "https://api.steinhq.com/v1/storages/651605b561eb47055da02529/Administracao";
 
-  const getApiData = async () =>{
-    const response = await fetch("https://sheet.best/api/sheets/b58fc9f2-2a3d-42b4-b079-9cafc4a27cf3").then((response) => response.json());
-    setData(response);
-  }
+export default function Page() {  
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    getApiData();
+    axios.get(baseURL).then((response) => {
+      setData(response.data);
+    });
   }, []);
+
+  if (!data) return null;
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -28,14 +29,12 @@ export default function Page() {
           {data.map((item)=>(
               <div className="group relative">
               <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                <a href={item.href}>
-                  <span className="absolute inset-0" />
-                  {item.Grupo}
-                </a>
+                <span className="absolute inset-0" />
+                {item.Grupo}
               </h3>
               <Thermometer
                   theme="light"
-                  value={(item.quantidade_atual/item.valor_maximo)*100}
+                  value={(parseFloat(item.quantidade_atual)/parseFloat(item.quantidade_maxima))*100}
                   max="100"
                   steps="10"
                   format="%"
